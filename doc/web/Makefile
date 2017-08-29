@@ -21,17 +21,21 @@ help:
 %: Makefile
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-
-helpmy:
+helpme:
+	@echo "  helpme      prints this help info"
 	@echo "  clean       to clean build doc directory $(BUILDDIR)"
 	@echo "  docdir      to create documentation directory $(BUILDDIR), clone repo"
+	@echo "  html        to generate html documentation"
 	@echo "  gh-pages    to add, commit and push documentation to gh-pages"
+	@echo 
+	@echo "  Sequence of make commands: clean, docdir, html, gh-pages"
 
 printpars:
 	@echo
 	@echo "MYPKGNAME: $(MYPKGNAME)"
 	@echo "SPHINXPROJ: $(SPHINXPROJ)"
 	@echo "BUILDDIR: $(BUILDDIR)"
+	@echo "Sequence of make commands: clean, docdir, html, gh-pages"
 
 clean:
 	rm -rf $(BUILDDIR)
