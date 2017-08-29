@@ -2,12 +2,13 @@
 #
 
 # You can set these variables from the command line.
+MYPKGNAME     = psalgos
 SPHINXOPTS    =
 SPHINXBUILD   = python -msphinx
-SPHINXPROJ    = psalgos-doc
+SPHINXPROJ    = $(MYPKGNAME)-doc
 SOURCEDIR     = .
 #BUILDDIR      = _build
-BUILDDIR      = ../../../psalgos-doc
+BUILDDIR      = ../../../$(MYPKGNAME)-doc
 
 # Put it first so that "make" without argument is like "make help".
 help:
@@ -19,3 +20,29 @@ help:
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+
+
+helpmy:
+	@echo "  clean       to clean build doc directory $(BUILDDIR)"
+	@echo "  docdir      to create documentation directory $(BUILDDIR), clone repo"
+	@echo "  gh-pages    to add, commit and push documentation to gh-pages"
+
+printpars:
+	@echo
+	@echo "MYPKGNAME: $(MYPKGNAME)"
+	@echo "SPHINXPROJ: $(SPHINXPROJ)"
+	@echo "BUILDDIR: $(BUILDDIR)"
+
+clean:
+	rm -rf $(BUILDDIR)
+	@echo "Documentation directory $(BUILDDIR) is removed"
+
+docdir:
+	mkdir $(BUILDDIR) && cd $(BUILDDIR) && rm -rf * && git clone https://github.com/lcls-psana/$(MYPKGNAME).git html && cd html && git branch gh-pages && git symbolic-ref HEAD refs/heads/gh-pages && rm .git/index && git clean -fdx
+	@echo
+	@echo "Empty documentation directory is ready: $(BUILDDIR)"
+
+gh-pages:
+	cd $(BUILDDIR)/html && git add -A && git commit -m "add/update doc" && git push origin gh-pages -f
+	@echo
+	@echo "Documentation is pushed on gh-pages"
