@@ -391,6 +391,13 @@ def list_of_peak_parameters(peaks) :
     return [p.parameters() for p in peaks]
 
 #------------------------------
+
+def numpy_2d_arr_of_peak_parameters(peaks) :
+    """Converts list of peak objects to the (old style) numpy array of peak parameters.
+    """    
+    return np.array(list_of_peak_parameters(peaks), dtype=np.float)
+
+#------------------------------
 #------------------------------
 #------------------------------
 #------------------------------
@@ -400,7 +407,9 @@ class PyAlgos :
     """Backward compatability support for ImgAlgos.PyAlgos.
     """
     def __init__(self, windows=None, mask=None, pbits=0) :
-        """Parameters
+        """
+        Parameters
+
             - windows - is not used.
             - mask - numpy.array of the same shape as data or None.
             - pbits - level of verbosity bitword: NONE=0, DEBUG=1, INFO=2, WARNING=4, ERROR=8, CRITICAL=16
@@ -432,14 +441,16 @@ class PyAlgos :
         :param float nsigm: threshold on intensity to include pixel in connected group in terms of number of sigma (rms) estimated for pixels in the ring defined by r0 and dr
         :param np.array mask: mask uint16 shaped as data
         :return: list of tuple peak parameters (seg, row, col, npix, amp_max, amp_tot, row_cgrav, col_cgrav, row_sigma, col_sigma, row_min, row_max, col_min, col_max, bkgd, noise, son)
-        :rtype: list of tuples
+        :rtype: numpy.array ndim=2, dtype=float 
         """
         _mask = mask if mask is not None else self.mask
         _r0 = r0 if r0 is not None else self.r0
         _dr = dr if dr is not None else self.dr
         peaks = peaks_adaptive(data, _mask, rank, _r0, _dr, nsigm,\
                                self.npix_min, self.npix_max, self.amax_thr, self.atot_thr, self.son_min)
-        return list_of_peak_parameters(peaks)
+
+        return numpy_2d_arr_of_peak_parameters(peaks)
+        #return list_of_peak_parameters(peaks)
 
 
     def peak_finder_v4r3(self, data, thr_low=20, thr_high=50, rank=5, r0=7, dr=2, mask=None) :
@@ -453,14 +464,16 @@ class PyAlgos :
         :param float dr: width [in pixels] of the ring for background evaluation
         :param np.array mask: mask uint16 shaped as data
         :return: list of tuple peak parameters (seg, row, col, npix, amp_max, amp_tot, row_cgrav, col_cgrav, row_sigma, col_sigma, row_min, row_max, col_min, col_max, bkgd, noise, son)
-        :rtype: list of tuples
+        :rtype: numpy.array: ndim=2, dtype=float - array of peak parameters.
         """
         _mask = mask if mask is not None else self.mask
         _r0 = r0 if r0 is not None else self.r0
         _dr = dr if dr is not None else self.dr
         peaks = peaks_droplet(data, _mask, thr_low, thr_high, rank, _r0, _dr,\
                                self.npix_min, self.npix_max, self.amax_thr, self.atot_thr, self.son_min)
-        return list_of_peak_parameters(peaks)
+
+        return numpy_2d_arr_of_peak_parameters(peaks)
+        #return list_of_peak_parameters(peaks)
 
     def set_son_pars(self, r0=5, dr=0.05) :
         self.r0 = r0 
