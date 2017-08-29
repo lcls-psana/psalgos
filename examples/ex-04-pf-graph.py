@@ -63,7 +63,8 @@ def test_pf(tname) :
     DO_PLOT_LOCAL_MAXIMUMS  = True if PF in (V3,V4) else False
     DO_PLOT_LOCAL_MINIMUMS  = True if PF == V3 else False
 
-    shape=(500, 500)
+    #shape=(500, 500)
+    shape=(1024, 1024)
 
     mask = np.ones(shape, dtype=np.uint16)
 
@@ -171,8 +172,7 @@ def test_pf(tname) :
             peaks_rec.append((seg, row, col, amax, atot, npix))
             print rec
 
-        #peaks_gen = [(0, r, c, a, a*s, 9*s*s) for r,c,a,s in peaks_sim]
-        #peaks_rec = [(p.seg, p.row, p.col, p.amp_max, p.amp_tot, p.npix) for p in peaks]
+        peaks_rec = [(p.seg, p.row, p.col, p.amp_max, p.amp_tot, p.npix) for p in peaks]
         #s, r, c, amax, atot, npix = rec[0:6]
 
 

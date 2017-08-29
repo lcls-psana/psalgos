@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 #------------------------------
 """
-Created on 2017-08-10 by Mikhail Dubrovin
-
-Class provides access to C++ algorithms from python.
+Class :py:class:`DCMethods` provides access to C++ algorithms from python.
 
 Usage::
 
@@ -102,6 +100,11 @@ Usage::
 
     # print info
     alg.print_attributes() # mask, r0, dr, peak selection parameters
+
+
+Created: 2017-08-10 by Mikhail Dubrovin
+
+--------
 """
 
 #------------------------------
@@ -314,7 +317,7 @@ def peaks_adaptive(data, mask, rank=5, r0=7.0, dr=2.0, nsigm=5,\
             data.shape = shape_as_3d(shape_in)
             peaks=[]
             if mask is None :
-                _mask = np.ones((data_in[-2], data_in[-1]), dtype=np.uint16)
+                _mask = np.ones((shape_in[-2], shape_in[-1]), dtype=np.uint16)
                 for seg in range(data.shape[0]) :
                     peaks += peaks_adaptive_2d(data[seg,:,:], _mask, rank, r0, dr, nsigm,\
                                                seg, npix_min, npix_max, amax_thr, atot_thr, son_min)
@@ -362,7 +365,7 @@ def peaks_droplet(data, mask, thr_low, thr_high, rank=5, r0=7.0, dr=2.0,\
             data.shape = shape_as_3d(shape_in)
             peaks=[]
             if mask is None :
-                _mask = np.ones((data_in[-2], data_in[-1]), dtype=np.uint16)
+                _mask = np.ones((shape_in[-2], shape_in[-1]), dtype=np.uint16)
                 for seg in range(data.shape[0]) :
                     peaks += peaks_droplet_2d(data[seg,:,:], _mask, thr_low, thr_high, rank, r0, dr,\
                                               seg, npix_min, npix_max, amax_thr, atot_thr, son_min)
