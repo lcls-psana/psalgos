@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #------------------------------
 """
-Class :py:class:`DCMethods` provides access to C++ algorithms from python.
+Class :py:class:`pypsalgos` provides access to C++ algorithms from python.
 
 Usage::
 
@@ -408,11 +408,9 @@ class PyAlgos :
     """
     def __init__(self, windows=None, mask=None, pbits=0) :
         """
-        Parameters
-
-            - windows - is not used.
-            - mask - numpy.array of the same shape as data or None.
-            - pbits - level of verbosity bitword: NONE=0, DEBUG=1, INFO=2, WARNING=4, ERROR=8, CRITICAL=16
+        :param numpy.array windows: - is not used.
+        :param numpy.array mask: - of the same shape as data or None.
+        :param uint pbits: - level of verbosity bitword: NONE=0, DEBUG=1, INFO=2, WARNING=4, ERROR=8, CRITICAL=16
         """
         self.mask = mask
         self.r0 = 7
@@ -440,8 +438,11 @@ class PyAlgos :
         :param float dr: width [in pixels] of the ring for background evaluation
         :param float nsigm: threshold on intensity to include pixel in connected group in terms of number of sigma (rms) estimated for pixels in the ring defined by r0 and dr
         :param np.array mask: mask uint16 shaped as data
-        :return: list of tuple peak parameters (seg, row, col, npix, amp_max, amp_tot, row_cgrav, col_cgrav, row_sigma, col_sigma, row_min, row_max, col_min, col_max, bkgd, noise, son)
-        :rtype: numpy.array ndim=2, dtype=float 
+        :return: np.array peaks: 2-d numpy.array of float peak parameters; 
+                 each row contains (seg, row, col, npix, amp_max, amp_tot, 
+                 row_cgrav, col_cgrav, row_sigma, col_sigma, row_min, row_max, col_min, col_max, 
+                 bkgd, noise, son)
+        :rtype numpy.array: ndim=2, dtype=float 
         """
         _mask = mask if mask is not None else self.mask
         _r0 = r0 if r0 is not None else self.r0
@@ -463,8 +464,11 @@ class PyAlgos :
         :param float r0: radius [in pixels] of the ring for background evaluation
         :param float dr: width [in pixels] of the ring for background evaluation
         :param np.array mask: mask uint16 shaped as data
-        :return: list of tuple peak parameters (seg, row, col, npix, amp_max, amp_tot, row_cgrav, col_cgrav, row_sigma, col_sigma, row_min, row_max, col_min, col_max, bkgd, noise, son)
-        :rtype: numpy.array: ndim=2, dtype=float - array of peak parameters.
+        :return: np.array peaks: 2-d numpy.array of float peak parameters; 
+                 each row contains (seg, row, col, npix, amp_max, amp_tot, 
+                 row_cgrav, col_cgrav, row_sigma, col_sigma, row_min, row_max, col_min, col_max, 
+                 bkgd, noise, son)
+        :rtype numpy.array: ndim=2, dtype=float - array of peak parameters.
         """
         _mask = mask if mask is not None else self.mask
         _r0 = r0 if r0 is not None else self.r0
