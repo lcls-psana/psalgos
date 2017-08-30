@@ -407,10 +407,11 @@ class PyAlgos :
     """Backward compatability support for ImgAlgos.PyAlgos.
     """
     def __init__(self, windows=None, mask=None, pbits=0) :
-        """
-        :param numpy.array windows: - is not used.
-        :param numpy.array mask: - of the same shape as data or None.
-        :param uint pbits: - level of verbosity bitword: NONE=0, DEBUG=1, INFO=2, WARNING=4, ERROR=8, CRITICAL=16
+        """Costructor
+
+        :param numpy.array windows: is not used.
+        :param numpy.array mask: of the same shape as data or None.
+        :param uint pbits: level of verbosity bitword: NONE=0, DEBUG=1, INFO=2, WARNING=4, ERROR=8, CRITICAL=16
         """
         self.mask = mask
         self.r0 = 7
@@ -430,7 +431,7 @@ class PyAlgos :
 
 
     def peak_finder_v3r3(self, data, rank=5, r0=7, dr=2, nsigm=5, mask=None) :
-        """runs "ranker" peakfinder and returns the list of peak parameters.
+        """Runs "ranker" peakfinder and returns the list of peak parameters.
 
         :param np.array data: n-d numpy array or list of 2-d numpy arrays of data 
         :param int rank: radial size or the region [row-rank:row+rank, col-rank:col+rank] where central pixel is a local maximum
@@ -455,7 +456,7 @@ class PyAlgos :
 
 
     def peak_finder_v4r3(self, data, thr_low=20, thr_high=50, rank=5, r0=7, dr=2, mask=None) :
-        """runs "droplet-finder" and returns the list of peak parameters.
+        """Runs "droplet-finder" and returns the list of peak parameters.
 
         :param np.array data: n-d numpy array or list of 2-d numpy arrays of data 
         :param float thr_low: low threshold [ADU] - used to include pixel in connected group and select pixels to estimate rms and mean in the ring
