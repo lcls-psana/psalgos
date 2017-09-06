@@ -414,7 +414,7 @@ peakFinderV3r3(const T *data
   m_dr = dr;
   m_nsigm = nsigm;
   m_img_size = rows*cols;
-  m_pixgrp_max_size = pow(2*rank+1, 2);
+  m_pixgrp_max_size = (2*rank+1)*(2*rank+1);
 
   if(m_pbits & LOG::DEBUG) std::cout << "in peakFinderV3r3, rank=" << rank << '\n';
   if(m_pbits & LOG::INFO) printParameters();
@@ -815,7 +815,7 @@ peakFinderV4r3(const T *data
   m_dr = dr;
   m_nsigm = 0; // nsigm;
   m_img_size = rows*cols;
-  m_pixgrp_max_size = pow(2*rank+1, 2);
+  m_pixgrp_max_size = (2*rank+1)*(2*rank+1);
 
   if(m_pbits & LOG::DEBUG) std::cout << "in peakFinderV4r3, rank=" << rank << '\n';
   if(m_pbits & LOG::INFO) printParameters();

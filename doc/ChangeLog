@@ -11,6 +11,10 @@ Package author: Mikhail S. Dubrovin
 Please describe any modifications that you made to the package in the
 reverse time order.
 
+Tag: V00-00-10
+2017-09-06 Mikhail S. Dubrovin
+- PeakFinderAlgos.h - get rid of pow() which is umbigous in rhel5
+
 Tag: V00-00-09
 2017-09-05 Mikhail S. Dubrovin
 - In peakFinderV4r3 evaluate ems and S/N for pixel |intensity| < thr_high (in stead of low)
@@ -40,7 +44,6 @@ include/PeakFinderAlgos.h
 pyext/psalgos_ext.pyx
 src/PeakFinderAlgos.cpp
 src/pypsalgos.py
-
 
 Tag: V00-00-04
 2017-08-15 Mikhail S. Dubrovin
