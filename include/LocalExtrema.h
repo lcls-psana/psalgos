@@ -790,6 +790,7 @@ mapOfThresholdMaximums(const T *data
     for(unsigned c = cmin; c<cmax; c++) {
       irc = r*cols+c;
       if(! mask[irc])                 _thr_maxima[irc]  = 0;  // pixel is masked
+      else if(data[irc] < -_thr_high) _thr_maxima[irc] |= 32; // a<-thr_high
       else if(data[irc] < -_thr_low)  _thr_maxima[irc] |= 16; // a<-thr_low
       else if(data[irc] <  _thr_low)  _thr_maxima[irc] |= 1;  // a<thr_low - for background
       else if(data[irc] <  _thr_high) _thr_maxima[irc] |= 2;  // a>=thr_low, but a<thr_high

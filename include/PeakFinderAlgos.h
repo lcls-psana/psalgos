@@ -599,7 +599,8 @@ _evaluateRingAvgRmsForDroplet(const T *data
     irc = ir*m_cols+ic;
 
     if(! m_mask[irc]) continue;               // skip masked pixels
-    if(! (m_local_maxima[irc] & 1)) continue; // skip pixels with |a| > thr_low
+    //if(! (m_local_maxima[irc] & 1)) continue; // skip pixels with |a| > thr_low
+    if(! (m_local_maxima[irc] & 19)) continue; // skip pixels with |a| > thr_high
 
     amp = (double)data[irc];
     sum0 ++;
