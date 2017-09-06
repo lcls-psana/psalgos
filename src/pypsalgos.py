@@ -68,8 +68,11 @@ Usage::
     # data and mask are N-d numpy arrays or list of 2-d numpy arrays of the same shape    
     peaks = peaks_droplet(data, mask=None, thr_low, thr_high, rank=5, r0=7.0, dr=2.0, npix_min=1, npix_max=None, amax_thr=0, atot_thr=0, son_min=8)
 
-    peak_pars = list_of_peak_parameters(peaks)
+    # convert peaks (list of peak objects) to somethong else:
+    from psalgos.pypsalgos import list_of_peak_parameters, numpy_2d_arr_of_peak_parameters
 
+    lst_peak_pars = list_of_peak_parameters(peaks)         # returns list of tuples, where tuple consists of float peak parameters 
+    arr_peak_pars = numpy_2d_arr_of_peak_parameters(peaks) # returns 2d numpy array of float peak parameters
 
     # Backward compatability support for ImgAlgos.PyAlgos
     # ===================================================
