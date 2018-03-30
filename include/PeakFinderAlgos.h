@@ -643,6 +643,10 @@ _findConnectedPixelsForLocalMaximumV2(const T* data
   m_reg_cmin = std::max(0,           int(c0-m_rank));
   m_reg_cmax = std::min((int)m_cols, int(c0+m_rank+1));
 
+  //Clean rank-size m_conmap
+  for(int r=m_reg_rmin; r<m_reg_rmax; r++)
+    for(int c=m_reg_cmin; c<m_reg_cmax; c++) m_conmap[r*m_cols+c] = 0;
+
   //if(m_pbits & LOG::DEBUG) std::cout << "in _findConnectedPixelsForLocalMaximum, seg=" << m_seg 
   //                          << " rank=" << m_rank  << " r0=" << r0 << " c0=" << c0 << '\n';
   //std::cout << "ZZZ _findConnectedPixelsForLocalMaximum : rank=" << rank  << " r0=" << r0 << " c0=" << c0 << '\n';
@@ -664,10 +668,12 @@ _findConnectedPixelsInRegionV3(const T* data, const int& r, const int& c)
   //std::cout << "in _findConnectedPixelsInRegionV3, r=" << r << " c=" << c << '\n';
   int irc = r*m_cols+c;
   if(! m_mask[irc]) return; // - masked
-  if(m_conmap[irc]) return; // - pixel is already used
+  if(m_conmap[irc]) return; // - pixel is already used // ????????? double-counting or symmetry?
   if(data[irc] < (T)m_reg_thr) return; // discard pixel below threshold if m_reg_thr != 0 
 
   m_conmap[irc] = m_numreg; // mark pixel on map
+
+  //std::cout << " XXX r=" << r << " c=" << c << " m_numreg:" << m_numreg << '\n';
 
   v_ind_pixgrp.push_back(TwoIndexes(r,c));
 
@@ -905,6 +911,10 @@ _findConnectedPixelsForDroplet(const int& r0
   m_reg_rmax = std::min((int)m_rows, int(r0+m_rank+1));
   m_reg_cmin = std::max(0,           int(c0-m_rank));
   m_reg_cmax = std::min((int)m_cols, int(c0+m_rank+1));
+
+  //Clean rank-size m_conmap
+  for(int r=m_reg_rmin; r<m_reg_rmax; r++)
+    for(int c=m_reg_cmin; c<m_reg_cmax; c++) m_conmap[r*m_cols+c] = 0;
 
   //if(m_pbits & LOG::DEBUG) std::cout << "in _findConnectedPixelsForLocalMaximum, seg=" << m_seg 
   //                                   << " rank=" << m_rank  << " r0=" << r0 << " c0=" << c0 << '\n';

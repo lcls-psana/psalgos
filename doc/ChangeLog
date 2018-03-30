@@ -11,6 +11,11 @@ Package author: Mikhail S. Dubrovin
 Please describe any modifications that you made to the package in the
 reverse time order.
 
+Tag: V00-00-11
+2018-03-30 Mikhail S. Dubrovin
+- LocalExtrema.h - fix Chuck's issue for extreams in flat images
+- PeakFinderAlgos.h - fix Chuck's issue for asymmetric processing of direct and flipud images
+
 Tag: V00-00-10
 2017-09-06 Mikhail S. Dubrovin
 - PeakFinderAlgos.h - get rid of pow() which is umbigous in rhel5
