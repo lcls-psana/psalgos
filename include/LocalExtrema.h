@@ -66,6 +66,9 @@ namespace localextrema {
  *  @li Call methods
  *  \n
  *  @code
+ *  size_t n = localMinima1d(data, mask, cols, stride, rank, local_minima);
+ *  size_t n = localMaxima1d(data, mask, cols, stride, rank, local_maxima);
+ *  
  *  size_t n = mapOfLocalMinimums(data, mask, rows, cols, rank, arr2d);
  *  size_t n = mapOfLocalMaximums(data, mask, rows, cols, rank, arr2d);
  *  size_t n = mapOfLocalMaximumsRank1Cross(data, mask, rows, cols, arr2d);
@@ -122,6 +125,8 @@ localMinima1d(const T *data
              ,extrim_t *local_minima=0
              )
 {
+  //std::cout << "in localMinima1d, rank=" << rank << "\n";
+
   extrim_t *_local_minima = local_minima;
   size_t counter = 0;
 
@@ -133,6 +138,7 @@ localMinima1d(const T *data
   for(unsigned c=0; c<rank; c++) {
       i = c*stride;
       if(!mask[i]) continue;
+      if(!(data[i]<data[i+stride])) continue;
       _local_minima[i] |= 2;
       for(unsigned cc=c+1; cc<c+rank+1; cc++) {
 	  ii = cc*stride;
@@ -152,6 +158,7 @@ localMinima1d(const T *data
   for(unsigned c=rank; c<cols-rank; c++) {
       i = c*stride;
       if(!mask[i]) continue;
+      if(!(data[i]<data[i+stride])) continue;
       _local_minima[i] |= 2; // set 2nd bit
 
       // check positive side of c
@@ -182,6 +189,7 @@ localMinima1d(const T *data
   for(unsigned c=cols-1; c>cols-rank-1; c--) {
       i = c*stride;
       if(!mask[i]) continue;
+      if(!(data[i]<data[i-stride])) continue;
       _local_minima[i] |= 2;
       for(unsigned cc=c-1; cc>c-rank-1; cc--) {
 	  ii = cc*stride;
@@ -203,11 +211,11 @@ localMinima1d(const T *data
 //-----------------------------
 //-----------------------------
   /**
-   * @brief returns number of found maxima and array local_maxima of local minimums of requested rank, 
-   *        where rank defins a square region [cols-rank, cols+rank]. Assumes that cols > 2*rank...
+   * @brief returns number of found maxima and array local_maxima of local maximums of requested rank, 
+   *        where rank defins a region [cols-rank, cols+rank]. Assumes that cols > 2*rank...
    * 
-   * 1-d array of local minumum of (uint16) values of data shape, 
-   * with 0/+1/+2 for bad/non-minumum/minimum in rank region.   
+   * 1-d array of local maxumum of (uint16) values of data shape, 
+   * with 0/+1/+2 for bad/non-maxumum/maximum in rank region.   
    * @param[in]  data - pointer to data array
    * @param[in]  mask - pointer to mask array; mask marks bad/good (0/1) pixels
    * @param[in]  cols - number of columns in 1d array
@@ -227,6 +235,8 @@ localMaxima1d(const T *data
              ,extrim_t *local_maxima=0
              )
 {
+  //std::cout << "in localMaxima1d, rank=" << rank << "\n";
+
   extrim_t *_local_maxima = local_maxima;
   size_t counter = 0;
 
@@ -238,6 +248,7 @@ localMaxima1d(const T *data
   for(unsigned c=0; c<rank; c++) {
       i = c*stride;
       if(!mask[i]) continue;
+      if(!(data[i]>data[i+stride])) continue;
       _local_maxima[i] |= 2;
       for(unsigned cc=c+1; cc<c+rank+1; cc++) {
 	  ii = cc*stride;
@@ -257,6 +268,7 @@ localMaxima1d(const T *data
   for(unsigned c=rank; c<cols-rank; c++) {
       i = c*stride;
       if(!mask[i]) continue;
+      if(!(data[i]>data[i+stride])) continue;
       _local_maxima[i] |= 2; // set 2nd bit
 
       // check positive side of c
@@ -287,6 +299,7 @@ localMaxima1d(const T *data
   for(unsigned c=cols-1; c>cols-rank-1; c--) {
       i = c*stride;
       if(!mask[i]) continue;
+      if(!(data[i]>data[i-stride])) continue;
       _local_maxima[i] |= 2;
       for(unsigned cc=c-1; cc>c-rank-1; cc--) {
 	  ii = cc*stride;
@@ -341,10 +354,11 @@ mapOfLocalMinimums(const T *data
   std::vector<TwoIndexes> v_inddiag = evaluateDiagIndexes(rank);
 
   extrim_t *_local_minima = local_minima;
+  size_t size = rows*cols;
 
   //if(_local_minima.empty()) 
   //   _local_minima = make_ndarray<extrim_t>(data.shape()[0], data.shape()[1]);
-  std::fill_n(_local_minima, int(rows*cols), extrim_t(0));
+  std::fill_n(_local_minima, int(size), extrim_t(0));
 
   size_t counter = 0;
 
@@ -365,6 +379,8 @@ mapOfLocalMinimums(const T *data
       irc = r*cols+c;
 
       if(!mask[irc]) continue;
+      if(!(c+1<cmax)) continue;
+      if(!(data[irc]<data[irc+1])) continue;
       _local_minima[irc] = 1;
 
       // positive side of c 
@@ -405,6 +421,8 @@ mapOfLocalMinimums(const T *data
       irc = r*cols+c;
 
       if(!mask[irc]) continue;
+      if(!(r+1<rmax)) continue;
+      if(!(data[irc]<data[irc+cols])) continue;
       _local_minima[irc] |= 2; // set 2nd bit
 
       // positive side of r 
@@ -523,6 +541,8 @@ mapOfLocalMaximums(const T *data
     for(unsigned c = cmin; c<cmax; c++) {
       irc = r*cols+c;
       if(!mask[irc]) continue;
+      if(!(c+1<cmax)) continue;
+      if(!(data[irc]>data[irc+1])) continue;
       _local_maxima[irc] = 1;
 
       // positive side of c 
@@ -563,6 +583,8 @@ mapOfLocalMaximums(const T *data
       //if(!_local_maxima[irc]) continue;
 
       if(!mask[irc]) continue;
+      if(!(r+1<rmax)) continue;
+      if(!(data[irc]>data[irc+cols])) continue;
       _local_maxima[irc] |= 2; // set 2nd bit
 
       // positive side of r 
@@ -686,8 +708,8 @@ mapOfLocalMaximumsRank1Cross(const T *data
     for(; c<cmax-1; c++) {
       irc = r*cols+c;
       if(!mask[irc]) continue;                                       // go to the next pixel
-      if(mask[irc+1] && (data[irc+1] > data[irc])) continue;         // go to the next pixel
-      if(mask[irc-1] && (data[irc-1] > data[irc])) {c+=1; continue;} // jump ahead 
+      if(mask[irc+1] && (data[irc+1] >= data[irc])) continue;         // go to the next pixel
+      if(mask[irc-1] && (data[irc-1] >= data[irc])) {c+=1; continue;} // jump ahead 
       _local_maxima[irc] |= 1;  // set 1st bit
       c+=1; // jump ahead 
     }
@@ -715,9 +737,9 @@ mapOfLocalMaximumsRank1Cross(const T *data
       irc = r*cols+c;
       if(!mask[irc]) continue;
       ircm = (r+1)*cols+c;
-      if(mask[ircm] && (data[ircm] > data[irc])) continue;         // go to the next pixel
+      if(mask[ircm] && (data[ircm] >= data[irc])) continue;         // go to the next pixel
       ircm = (r-1)*cols+c;
-      if(mask[ircm] && (data[ircm] > data[irc])) {r+=1; continue;} // jump ahead 
+      if(mask[ircm] && (data[ircm] >= data[irc])) {r+=1; continue;} // jump ahead 
       _local_maxima[irc] |= 2; // set 2nd bit
       r+=1; // jump ahead 
 
