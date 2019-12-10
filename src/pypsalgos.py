@@ -109,6 +109,7 @@ Created: 2017-08-10 by Mikhail Dubrovin
 
 --------
 """
+from __future__ import print_function
 
 #------------------------------
 #
@@ -506,14 +507,14 @@ class PyAlgos :
         return None
 
     def print_attributes(self) :
-        print 'mask    ', self.mask
-        print 'r0      ', self.r0
-        print 'dr      ', self.dr
-        print 'npix_min', self.npix_min
-        print 'npix_max', self.npix_max
-        print 'amax_thr', self.amax_thr
-        print 'atot_thr', self.atot_thr
-        print 'son_min ', self.son_min 
+        print('mask    ', self.mask)
+        print('r0      ', self.r0)
+        print('dr      ', self.dr)
+        print('npix_min', self.npix_min)
+        print('npix_max', self.npix_max)
+        print('amax_thr', self.amax_thr)
+        print('atot_thr', self.atot_thr)
+        print('son_min ', self.son_min) 
 
     def print_input_pars(self) :
         self.print_attributes()
@@ -523,6 +524,6 @@ class PyAlgos :
 #------------------------------
 
 if __name__ == "__main__" :
-    print 'See tests in examples, e.g.,\n  python psalgos/examples/ex-02-localextrema.py 3'
+    print('See tests in examples, e.g.,\n  python psalgos/examples/ex-02-localextrema.py 3')
 
 #------------------------------
