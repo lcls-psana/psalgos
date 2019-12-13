@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #------------------------------
 
+from __future__ import print_function
 from psalgos.pypsalgos import peaks_adaptive, peaks_droplet # import * 
 from time import time
 
@@ -10,7 +11,7 @@ def test_pfv3r3(tname):
 
     import numpy as np
     from pyimgalgos.GlobalUtils import print_ndarr
-    print 'test_pfv3r3: %s' % {'1':'2-d np.array', '2':'3-d np.array', '3':'list of 2-d np.array'}[tname]
+    print('test_pfv3r3: %s' % {'1':'2-d np.array', '2':'3-d np.array', '3':'list of 2-d np.array'}[tname])
     
     sh = None
     data = None
@@ -36,11 +37,11 @@ def test_pfv3r3(tname):
     peaks = peaks_adaptive(data, mask, rank=5, r0=7.0, dr=2.0, nsigm=3,\
                            npix_min=1, npix_max=None, amax_thr=0, atot_thr=0, son_min=8)
 
-    print 'peaks_adaptive: img.shape=%s consumed time = %.6f(sec)' % (str(sh), time()-t0_sec)
+    print('peaks_adaptive: img.shape=%s consumed time = %.6f(sec)' % (str(sh), time()-t0_sec))
 
     for p in peaks : 
         #print dir(p)
-        print '  seg:%4d, row:%4d, col:%4d, npix:%4d, son:%4.1f' % (p.seg, p.row, p.col, p.npix, p.son)
+        print('  seg:%4d, row:%4d, col:%4d, npix:%4d, son:%4.1f' % (p.seg, p.row, p.col, p.npix, p.son))
 
 #------------------------------
 
@@ -48,7 +49,7 @@ def test_pfv4r3(tname):
 
     import numpy as np
     from pyimgalgos.GlobalUtils import print_ndarr
-    print 'test_pfv4r3: %s' % {'4':'2-d np.array', '5':'3-d np.array', '6':'list of 2-d np.array'}[tname]
+    print('test_pfv4r3: %s' % {'4':'2-d np.array', '5':'3-d np.array', '6':'list of 2-d np.array'}[tname])
     
     sh = None
     data = None
@@ -74,11 +75,11 @@ def test_pfv4r3(tname):
     peaks = peaks_droplet(data, mask, thr_low=50, thr_high=80, rank=5, r0=7.0, dr=2.0,\
                           npix_min=1, npix_max=None, amax_thr=0, atot_thr=0, son_min=5.5)
 
-    print 'peaks_droplet: img.shape=%s consumed time = %.6f(sec)' % (str(sh), time()-t0_sec)
+    print('peaks_droplet: img.shape=%s consumed time = %.6f(sec)' % (str(sh), time()-t0_sec))
 
     for p in peaks : 
         #print dir(p)
-        print '  seg:%4d, row:%4d, col:%4d, npix:%4d, son:%4.1f' % (p.seg, p.row, p.col, p.npix, p.son)
+        print('  seg:%4d, row:%4d, col:%4d, npix:%4d, son:%4.1f' % (p.seg, p.row, p.col, p.npix, p.son))
 
 #------------------------------
 #------------------------------
@@ -88,7 +89,7 @@ def test_pfv4r3(tname):
 if __name__ == "__main__" :
     import sys; global sys
     tname = sys.argv[1] if len(sys.argv) > 1 else '1'
-    print 50*'_', '\nTest %s:' % tname
+    print(50*'_', '\nTest %s:' % tname)
     if   tname in {'1','2','3'} : test_pfv3r3(tname) # v3r3: peaks_adaptive 2-d, 3-d, list of 2-d np.array
     elif tname in {'4','5','6'} : test_pfv4r3(tname) # v4r3: peaks_droplet  2-d, 3-d, list of 2-d np.array
     else : sys.exit('Test %s is not implemented' % tname)

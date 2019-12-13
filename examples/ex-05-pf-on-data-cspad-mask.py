@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 import sys
 import math
 import numpy as np
@@ -18,7 +19,7 @@ import pyimgalgos.GlobalGraphics as gg
 #------------------------------
 
 tname = sys.argv[1] if len(sys.argv) > 1 else '1'
-print 50*'_', '\nTest %s:' % tname
+print(50*'_', '\nTest %s:' % tname)
 
 #------------------------------
 V3 = 3  # RANKER  v3r3
@@ -56,7 +57,7 @@ src    = psana.Source('DetInfo(CxiDs1.0:Cspad.0)')
 #src    = psana.Source('MfxEndstation.0:Rayonix.0')
 #src    = psana.Source('MfxEndstation.0:Epix100a.0')
 
-print '%s\nExample for\n  dataset: %s\n  source : %s' % (85*'_',dsname, src)
+print('%s\nExample for\n  dataset: %s\n  source : %s' % (85*'_',dsname, src))
 
 # Non-standard calib directory
 #psana.setOption('psana.calib-dir', './empty/calib')
@@ -75,7 +76,7 @@ env = ds.env()
 ##-----------------------------
 
 det = AreaDetector(src, env, pbits=0)
-print 85*'_', '\nInstrument: %s  run number: %d' % (det.instrument(), runnum)
+print(85*'_', '\nInstrument: %s  run number: %d' % (det.instrument(), runnum))
 
 nda_peds  = det.pedestals(runnum)
 print_ndarr(nda_peds, 'nda_peds')
@@ -132,14 +133,14 @@ fig1, axim1, axcb1, imsh1 = gg.fig_axim_axcb_imsh(figsize=(12,11))
 
 alg = None
 if TEST_BW_COMP :
-    print "BACKWARD COMPATABILITY TEST"
+    print("BACKWARD COMPATABILITY TEST")
     #alg = PyAlgos(windows=None, mask=mask, pbits=0) # for ImgAlgos.PyAlgos
     alg = PyAlgos(mask, pbits=0)
     if   PF == V3 : alg.set_peak_selection_pars(npix_min=2, npix_max=1e6, amax_thr=0, atot_thr=0, son_min=10)
     elif PF == V4 : alg.set_peak_selection_pars(npix_min=2, npix_max=1e6, amax_thr=0, atot_thr=0, son_min=5)
 
 else :
-    print "NEW PF TEST"
+    print("NEW PF TEST")
 
 
 t0_sec_evloop = time()
@@ -149,7 +150,7 @@ peaks = None
 # loop over events in data set
 for evnum, evt in enumerate(ds.events()) :
 
-    if evnum%100==0 : print 'Event %d' % (evnum)
+    if evnum%100==0 : print('Event %d' % (evnum))
 
     if evnum<SKIP   : continue
     if evnum>=EVTMAX : break
@@ -204,7 +205,7 @@ for evnum, evt in enumerate(ds.events()) :
             peaks_rec = [(int(p.seg), int(p.row), int(p.col), p.amp_max, p.amp_tot, int(p.npix)) for p in peaks]
 
         ###===================
-        print 'Event %d --- dt/evt = %f sec  img.shape=%s  number of peaks: %d' % (evnum, time()-t0_sec, str(nda.shape), len(peaks))
+        print('Event %d --- dt/evt = %f sec  img.shape=%s  number of peaks: %d' % (evnum, time()-t0_sec, str(nda.shape), len(peaks)))
         ###===================
 
         if DO_PLOT :
@@ -239,7 +240,7 @@ for evnum, evt in enumerate(ds.events()) :
 
 gg.show()
 
-print ' ----> Total script execution time = %f sec' % (time()-t0_sec_evloop)
+print(' ----> Total script execution time = %f sec' % (time()-t0_sec_evloop))
 
 #pstore.close_file()
 

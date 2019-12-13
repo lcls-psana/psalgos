@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #------------------------------
 #from psalgos.pypsalgos import local_minimums_2d, local_maximums_2d, local_maximums_rank1_cross_2d
+from __future__ import print_function
 import psalgos.pypsalgos as algos
 import numpy as np
 #------------------------------
@@ -10,11 +11,11 @@ import numpy as np
 
 def test01(tname='1', NUMBER_OF_EVENTS=3, DO_PRINT=False) :
 
-    print 'local extrema : %s' % ('minimums' if tname in ('1','2')\
+    print('local extrema : %s' % ('minimums' if tname in ('1','2')\
                              else 'maximums' if tname in ('3','4')\
                              else 'maximums runk=1 cross' if tname in ('5','6')\
                              else 'two-threshold maximums' if tname == '7'\
-                             else 'unknown test')
+                             else 'unknown test'))
 
     from time import time
     from pyimgalgos.GlobalUtils import print_ndarr
@@ -26,7 +27,7 @@ def test01(tname='1', NUMBER_OF_EVENTS=3, DO_PRINT=False) :
     fig1, axim1, axcb1, imsh1 = gg.fig_axim_axcb_imsh(figsize=fs)
     fig2, axim2, axcb2, imsh2 = gg.fig_axim_axcb_imsh(figsize=fs)
 
-    print 'Image shape: %s' % str(sh)
+    print('Image shape: %s' % str(sh))
 
     mu, sigma = 200, 25
 
@@ -52,7 +53,7 @@ def test01(tname='1', NUMBER_OF_EVENTS=3, DO_PRINT=False) :
         elif tname == '7'       : nmax = algos.threshold_maxima_2d(data, mask, rank, thr_low, thr_high, extrema)
         else : contunue
         #----------
-        print 'Event: %4d,  consumed time = %10.6f(sec),  nmax = %d' % (evnum, time()-t0_sec, nmax)
+        print('Event: %4d,  consumed time = %10.6f(sec),  nmax = %d' % (evnum, time()-t0_sec, nmax))
         
         if DO_PRINT : print_ndarr(extrema, 'output extrema')
         
@@ -107,7 +108,7 @@ def usage() :
 if __name__ == "__main__" :
     import sys; global sys
     tname = sys.argv[1] if len(sys.argv) > 1 else '0'
-    print 50*'_', '\nTest %s:' % tname
+    print(50*'_', '\nTest %s:' % tname)
     if   tname in ('1','2','3','4','5','6','7') : test01(tname)
     elif tname == '8' : test02()
     else : usage(); sys.exit('Test %s is not implemented' % tname)

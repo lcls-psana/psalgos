@@ -1,3 +1,4 @@
+from __future__ import print_function
 #------------------------------
 ### #!/usr/bin/env python
 
@@ -108,7 +109,7 @@ def test_pf(tname) :
         if ev<SKIP : continue
         #if ev>=EVTMAX : break
 
-        print 50*'_', '\nEvent %04d' % ev1
+        print(50*'_', '\nEvent %04d' % ev1)
 
         add_water_ring = False if PF == V4 else True
         img, peaks_sim = image_with_random_peaks(shape, add_water_ring)
@@ -137,8 +138,8 @@ def test_pf(tname) :
 #                alg.peak_finder_v4r2(img, thr_low=20, thr_high=40, rank=6, r0=7, dr=2)
 #                #alg.peak_finder_v4r2(img, thr_low=20, thr_high=40, rank=6, r0=3.3, dr=0)
 
-        print 'Time consumed by the peak_finder = %10.6f(sec) number of simulated/found peaks: %d/%d'%\
-              (time()-t0_sec, len(peaks_sim), len(peaks))
+        print('Time consumed by the peak_finder = %10.6f(sec) number of simulated/found peaks: %d/%d'%\
+              (time()-t0_sec, len(peaks_sim), len(peaks)))
 
         #map3 = reshape_to_2d(alg.maps_of_connected_pixels()) if DO_PLOT_CONNECED_PIXELS else None # np.zeros((10,10))
         #map4 = reshape_to_2d(alg.maps_of_local_maximums())   if DO_PLOT_LOCAL_MAXIMUMS  else None # np.zeros((10,10))
@@ -170,7 +171,7 @@ def test_pf(tname) :
                   rmin, rmax, cmin, cmax, bkgd, rms, son) #,\
                   #imrow, imcol, xum, yum, rum, phi)
             peaks_rec.append((seg, row, col, amax, atot, npix))
-            print rec
+            print(rec)
 
         peaks_rec = [(p.seg, p.row, p.col, p.amp_max, p.amp_tot, p.npix) for p in peaks]
         #s, r, c, amax, atot, npix = rec[0:6]
@@ -225,9 +226,9 @@ def test_pf(tname) :
 
 def ex_image_with_random_peaks() :     
     img, peaks = image_with_random_peaks()
-    print 'peaks:'
+    print('peaks:')
     for i, (r0, c0, a0, sigma) in enumerate(peaks) :
-        print '  %04d  row=%6.1f  col=%6.1f  amp=%6.1f  sigma=%6.3f' % (i, r0, c0, a0, sigma)
+        print('  %04d  row=%6.1f  col=%6.1f  amp=%6.1f  sigma=%6.3f' % (i, r0, c0, a0, sigma))
     plot_image(img)
 
 #------------------------------
@@ -235,10 +236,10 @@ def ex_image_with_random_peaks() :
 if __name__ == "__main__" :
     import sys; global sys
     tname = sys.argv[1] if len(sys.argv) > 1 else '3'
-    print 50*'_', '\nTest %s:' % tname
+    print(50*'_', '\nTest %s:' % tname)
     if   tname == '0' : ex_image_with_random_peaks()
     elif tname in ('3','3','3','4') : test_pf(tname)
-    else : print 'Not-recognized test name: %s' % tname
+    else : print('Not-recognized test name: %s' % tname)
     sys.exit('End of test %s' % tname)
  
 #------------------------------

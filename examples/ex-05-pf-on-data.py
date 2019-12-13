@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 import sys
 import math
 import numpy as np
@@ -17,7 +18,7 @@ import pyimgalgos.GlobalGraphics as gg
 #------------------------------
 
 ntest = int(sys.argv[1]) if len(sys.argv)>1 else 1
-print 'Test # %d' % ntest
+print('Test # %d' % ntest)
 
 #------------------------------
 SKIP        = 3
@@ -37,7 +38,7 @@ runnum = 95
 dsname = 'exp=mfxn8416:run=%d' % runnum
 #src    = psana.Source('MfxEndstation.0:Epix100a.0')
 src    = psana.Source('MfxEndstation.0:Rayonix.0')
-print '%s\nExample for\n  dataset: %s\n  source : %s' % (85*'_',dsname, src)
+print('%s\nExample for\n  dataset: %s\n  source : %s' % (85*'_',dsname, src))
 
 # Non-standard calib directory
 #psana.setOption('psana.calib-dir', './empty/calib')
@@ -56,7 +57,7 @@ env = ds.env()
 ##-----------------------------
 
 det = AreaDetector(src, env, pbits=0)
-print 85*'_', '\nInstrument: %s  run number: %d' % (det.instrument(), runnum)
+print(85*'_', '\nInstrument: %s  run number: %d' % (det.instrument(), runnum))
 
 nda_peds  = det.pedestals(runnum)
 print_ndarr(nda_peds, 'nda_peds')
@@ -113,7 +114,7 @@ peaks = None
 # loop over events in data set
 for evnum, evt in enumerate(ds.events()) :
 
-    if evnum%100==0 : print 'Event %d' % (evnum)
+    if evnum%100==0 : print('Event %d' % (evnum))
 
     if evnum<SKIP   : continue
     if evnum>=EVTMAX : break
@@ -146,7 +147,7 @@ for evnum, evt in enumerate(ds.events()) :
                                npix_min=2, npix_max=None, amax_thr=0, atot_thr=0, son_min=3)
 
         ###===================
-        print 'Event %d --- dt/evt = %f sec  img.shape=%s  number of peaks: %d' % (evnum, time()-t0_sec, str(nda.shape), len(peaks))
+        print('Event %d --- dt/evt = %f sec  img.shape=%s  number of peaks: %d' % (evnum, time()-t0_sec, str(nda.shape), len(peaks)))
         ###===================
 
         #for p in peaks : 
@@ -190,7 +191,7 @@ for evnum, evt in enumerate(ds.events()) :
 
 gg.show()
 
-print ' ----> Total script execution time = %f sec' % (time()-t0_sec_evloop)
+print(' ----> Total script execution time = %f sec' % (time()-t0_sec_evloop))
 
 #pstore.close_file()
 
