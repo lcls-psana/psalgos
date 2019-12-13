@@ -1,4 +1,5 @@
 from __future__ import print_function
+from __future__ import division
 #------------------------------
 ### #!/usr/bin/env python
 
@@ -25,7 +26,7 @@ def image_with_random_peaks(shape=(1000, 1000), add_water_ring=True) :
     if add_water_ring : 
         rad = 0.3*shape[0]
         sigm = rad/4
-        add_ring(img, amp=20, row=shape[0]/2, col=shape[1]/2, rad=rad, sigma=sigm)
+        add_ring(img, amp=20, row=shape[0]//2, col=shape[1]//2, rad=rad, sigma=sigm)
     peaks = add_random_peaks(img, npeaks=50, amean=100, arms=25, wmean=1.5, wrms=0.3)
     return img, peaks
 

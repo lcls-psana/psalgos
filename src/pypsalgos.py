@@ -110,6 +110,7 @@ Created: 2017-08-10 by Mikhail Dubrovin
 --------
 """
 from __future__ import print_function
+from __future__ import division
 
 #------------------------------
 #
@@ -125,7 +126,7 @@ def shape_as_2d(sh) :
     """Returns 2-d shape for n-d shape if n>2, otherwise returns unchanged shape.
     """
     if len(sh)<3 : return sh
-    return (size_from_shape(sh)/sh[-1], sh[-1])
+    return (size_from_shape(sh)//sh[-1], sh[-1])
 
 #------------------------------
 
@@ -133,7 +134,7 @@ def shape_as_3d(sh) :
     """Returns 3-d shape for n-d shape if n>3, otherwise returns unchanged shape.
     """
     if len(sh)<4 : return sh
-    return (size_from_shape(sh)/sh[-1]/sh[-2], sh[-2], sh[-1])
+    return (size_from_shape(sh)//sh[-1]//sh[-2], sh[-2], sh[-1])
 
 #------------------------------
 
@@ -407,7 +408,7 @@ def numpy_2d_arr_of_peak_parameters(peaks) :
 #------------------------------
 #------------------------------
 
-class PyAlgos :
+class PyAlgos(object) :
     """Backward compatability support for ImgAlgos.PyAlgos.
     """
     def __init__(self, windows=None, mask=None, pbits=0) :
